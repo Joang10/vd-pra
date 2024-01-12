@@ -41,9 +41,37 @@ def grouped_by_cause(df):
     df_grouped.to_csv('accidents_by_cause.csv', index=False)
 
 
+def grouped_by_type_day(df):
+    df_grouped = df.groupby('type_day').size().reset_index(name='count')
+    df_grouped = df_grouped.sort_values(by='count')
+    df_grouped.to_csv('accidents_by_type_day.csv', index=False)
+
+
+def grouped_by_district(df):
+    df_grouped = df.groupby('district_name').size().reset_index(name='count')
+    df_grouped = df_grouped.sort_values(by='count')
+    df_grouped.to_csv('accidents_by_district_name.csv', index=False)
+
+
+def grouped_by_neighborhood(df):
+    df_grouped = df.groupby('neighborhood_name').size().reset_index(name='count')
+    df_grouped = df_grouped.sort_values(by='count')
+    df_grouped.to_csv('accidents_by_neighborhood.csv', index=False)
+
+
+def mean_vehicles_by_cause(df):
+    df_grouped = df.groupby('cause_incident')['n_vehicles'].mean().reset_index()
+    df_grouped.columns = ['cause_incident', 'mean']
+    df_grouped.to_csv('mean_vehicles_by_cause.csv', index=False)
+
+
 if __name__ == '__main__':
     data = read_data()
     clean(data)
-    # explore(data)
-    # grouped_by_weekday(data)
-    # grouped_by_cause(data)
+    explore(data)
+    grouped_by_weekday(data)
+    grouped_by_cause(data)
+    grouped_by_type_day(data)
+    mean_vehicles_by_cause(data)
+    grouped_by_district(data)
+    grouped_by_neighborhood(data)
